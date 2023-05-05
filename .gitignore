@@ -1,3 +1,5 @@
+02-write-file/*.txt
+
 # Logs
 logs
 *.log
