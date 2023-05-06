@@ -15,19 +15,24 @@ const sourcePath = path.join(dirname, SOURCE_PATH)
 
 
 
-// Read all styles in 'styles' folder
-let sourceFiles = await fs.readdir(sourcePath)
-sourceFiles = sourceFiles.filter(e => { return path.extname(e) === CSS_EXTENTION }) 
+export default async function packCss(sourcePath, targetPath) {
+    // Read all styles in 'styles' folder
+    let sourceFiles = await fs.readdir(sourcePath)
+    sourceFiles = sourceFiles.filter(e => { return path.extname(e) === CSS_EXTENTION }) 
 
-// Load css files
-let cssArray = [] 
-for (let file of sourceFiles) {
-    const style = await fs.readFile(path.join(sourcePath, file), 'utf-8')
-    cssArray.push(style)
+    // Load css files
+    let cssArray = [] 
+    for (let file of sourceFiles) {
+        const style = await fs.readFile(path.join(sourcePath, file), 'utf-8')
+        cssArray.push(style)
+    }
+
+    // Create bundle dir if not exist. Join bundle and write to file
+    await fs.mkdir(targetPath, {recursive: true})
+    const cssBundle = cssArray.join('\n')
+    await fs.writeFile(path.join(targetPath, CSS_FILE_NAME), cssBundle)
 }
 
-// Create bundle dir if not exist. Join bundle and write to file
-await fs.mkdir(targetPath, {recursive: true})
-const cssBundle = cssArray.join('\n')
-await fs.writeFile(path.join(targetPath, CSS_FILE_NAME), cssBundle)
+await packCss(sourcePath, targetPath) 
+
 
