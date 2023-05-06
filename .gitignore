@@ -1,5 +1,5 @@
 02-write-file/*.txt
-
+04-copy-directory/copy-files/
 # Logs
 logs
 *.log
