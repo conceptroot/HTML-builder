@@ -1,11 +1,13 @@
 import {fileURLToPath} from 'url'
 import path from  'path'
 import fs from 'fs/promises'
+import packCss from '../05-merge-styles/index.js'
 
 const taskDirname = path.dirname(fileURLToPath(import.meta.url))
 
 const sourceHtmlPath = path.join(taskDirname, 'template.html')
 const sourceComponentPath = path.join(taskDirname, 'components') 
+const sourceStylesPath = path.join(taskDirname, 'styles')
 
 const bundlePath = path.join(taskDirname, 'project-dist')
 const bundleHtmlPath = path.join(bundlePath, 'index.html')
@@ -19,6 +21,7 @@ try {
     // build html
     await buildHTML()
     // build css
+    await packCss(sourceStylesPath, bundlePath, 'style.css')
     // copy assets
 } catch (e) {
     console.log('ОШИБКА')
