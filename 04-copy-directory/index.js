@@ -23,7 +23,6 @@ export default async function processDir(sourceDir, targetDir) {
     for (let item of  sourceFilesAndDirs) {
         if (item.isFile()) {
             // Если файл, то копируем файл в нужную директорию targetDir
-            console.log('ya fail:', item.name)
             const sourceFileName = path.join(sourceDir, item.name)
             const targetFileName = path.join(targetDir, item.name)
             await fs.copyFile(sourceFileName, targetFileName)
