@@ -15,8 +15,15 @@ await processDir(sourcePath, targetPath)
 
 
 export default async function processDir(sourceDir, targetDir) {
+    // Пробуем Удаляем директорию, на случай, если она уже была создана и в ней файлы
+    try {
+        await fs.rm(targetDir, {recursive: true})
+    } catch (e) {
+        // do nothing
+    }
     // Сначала создаем директорию targetDir куда будут записываться файлы
     await fs.mkdir(targetDir, {recursive: true})
+
     // Читаем всю директорию sourceDir, получаем список файлов
     const sourceFilesAndDirs = await fs.readdir(sourceDir, {withFileTypes: true})
     // Итерируемся по списку fileAndDirs:
@@ -37,5 +44,9 @@ export default async function processDir(sourceDir, targetDir) {
             await processDir(newSourceDir, newTargetDir)
         }
     }
+}
+
+async function clearDir(targetDir) {
+    await fs.rmdir(targetDir, { recursive: true } )
 }
 
