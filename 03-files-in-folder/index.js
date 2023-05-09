@@ -27,6 +27,7 @@ try {
 async function printFileInfo(dirent) {
     // 4. Проверка объекта на то, что он является файлом
     const isFile = dirent.isFile() ? 'файл' : 'не файл'
+    if (!dirent.isFile()) {return}
 
     const file = path.join(target_dirname, dirent.name)
     const filePath = path.parse(file)
